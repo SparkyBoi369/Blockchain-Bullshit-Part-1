@@ -1,0 +1,49 @@
+// Data storage bank
+contract DataStorageBank {
+    // Mapping to store data
+    mapping(bytes32 => bytes32) public data;
+
+    // Function to store data
+    function storeData(bytes32 key, bytes32 value) public {
+        data[key] = value;
+    }
+
+    // Function to retrieve data
+    function retrieveData(bytes32 key) public view returns (bytes32) {
+        return data[key];
+    }
+}
+
+// Token storage bank
+contract TokenStorageBank {
+    // Mapping to store token balance
+    mapping(address => uint256) public balanceOf;
+
+    // Function to deposit tokens
+    function deposit(address _to, uint256 _value) public {
+        require(_to != address(0));
+        require(_value > 0);
+
+        balanceOf[_to] += _value;
+    }
+
+    // Function to withdraw tokens
+    function withdraw(address _from, uint256 _value) public {
+        require(_from != address(0));
+        require(_value > 0);
+        require(_value <= balanceOf[_from]);
+
+        balanceOf[_from] -= _value;
+    }
+
+    // Function to transfer tokens
+    function transfer(address _from, address _to, uint256 _value) public {
+        require(_from != address(0));
+        require(_to != address(0));
+        require(_value > 0);
+        require(_value <= balanceOf[_from]);
+
+        balanceOf[_from] -= _value;
+        balanceOf[_to] += _value;
+    }
+}

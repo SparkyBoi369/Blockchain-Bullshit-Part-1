@@ -1,0 +1,34 @@
+pragma solidity ^0.8.0;
+
+contract TokenStorage {
+    mapping (address => uint) public balances;
+    mapping (address => bytes32[]) public storedData;
+    uint public totalBurned;
+    uint public storageLimit;
+
+    function burn(address user, uint burnAmount) public {
+        require(burnAmount <= balances[user], "Invalid burn amount");
+        balances[user] -= burnAmount;
+        totalBurned += burnAmount;
+    }
+
+    function determineStoredTokens(address user) public view returns (uint) {
+        bytes32[] memory storedDataForUser = storedData[user];
+        if (storedDataForUser.length <= storageLimit) {
+            uint storedTokens = calculateTokens(storedDataForUser.length, storageLimit);
+            return storedTokens;
+        } else {
+            return 0;
+        }
+    }
+
+    function calculateTokens(uint storedDataSize, uint storageLimit) private pure returns (uint) {
+        return storedDataSize * 10 / storageLimit;
+    }
+
+    function updateBalanceAndCheckBurnStatus(address user, uint burnAmount) public {
+        require(burnAmount <= balances[user], "Invalid burn amount");
+        balances[user] -= burnAmount;
+        totalBurned += burnAmount;
+    }
+}

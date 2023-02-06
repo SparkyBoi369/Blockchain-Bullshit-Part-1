@@ -1,0 +1,7 @@
+function encryptData(bytes data) private {
+    // Encryption algorithm
+}
+
+function obscuringTransactionData() public {
+    // Obscuring transaction data algorithm
+}

@@ -1,0 +1,46 @@
+class HashTable:
+    def __init__(self):
+        self.size = 10
+        self.keys = [None] * self.size
+        self.values = [None] * self.size
+        
+    def hash_function(self, key):
+        """
+        A basic hash function that converts a key to an index.
+        """
+        index = sum(ord(ch) for ch in key) % self.size
+        return index
+    
+    def insert(self, key, value):
+        """
+        Inserts a key-value pair into the hash table.
+        """
+        index = self.hash_function(key)
+        self.keys[index] = key
+        self.values[index] = value
+        
+    def get(self, key):
+        """
+        Retrieves the value associated with a given key.
+        """
+        index = self.hash_function(key)
+        if self.keys[index] == key:
+            return self.values[index]
+        return None
+    
+    def delete(self, key):
+        """
+        Deletes a key-value pair from the hash table.
+        """
+        index = self.hash_function(key)
+        if self.keys[index] == key:
+            self.keys[index] = None
+            self.values[index] = None
+
+# Initialize the hash table
+table = HashTable()
+
+# Insert some key-value pairs
+table.insert("apple", "red")
+table.insert("banana", "yellow")
+table.insert("cher

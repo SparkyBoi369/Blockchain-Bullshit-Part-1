@@ -1,0 +1,24 @@
+const express = require('express');
+const app = express();
+const SimpleWebRTC = require('simplewebrtc');
+
+app.get('/', (req, res) => {
+    res.send('Welcome to the P2P video streaming service');
+});
+
+app.get('/stream/:id', (req, res) => {
+    const webrtc = new SimpleWebR
+
+
+
+    webrtc.on('readyToCall', () => {
+        webrtc.joinRoom(req.params.id);
+    });
+    
+    res.send(`<html>
+        <body>
+            <video id="localVideo"></video>
+            <div id="remoteVideos"></div>
+        </body>
+    </html>`);
+    

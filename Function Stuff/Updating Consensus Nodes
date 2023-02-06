@@ -1,0 +1,12 @@
+# A basic function to update the consensus mechanism for new nodes
+def update_consensus(new_node_address, current_consensus_mechanism):
+    current_consensus_mechanism.append(new_node_address)
+    return current_consensus_mechanism
+
+# Usage
+new_node_address = "0x0987654321zyxwvu"
+current_consensus_mechanism = ["0x1234567890abcdef", "0x5678901234fedcba"]
+
+updated_consensus = update_consensus(new_node_address, current_consensus_mechanism)
+print(updated_consensus)
+# Output: ["0x1234567890abcdef", "0x5678901234fedcba", "0x0987654321zyxwvu"]

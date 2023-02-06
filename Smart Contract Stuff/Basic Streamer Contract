@@ -1,0 +1,25 @@
+pragma solidity ^0.8.0;
+
+contract Streamer {
+    // Variables
+    address owner;
+    mapping(address => bool) public viewers;
+    string public videoUrl;
+
+    // Events
+    event NewStream(address streamer, string videoUrl);
+    event ViewerAdded(address viewer);
+
+    // Functions
+    function startStream(string memory _videoUrl) public {
+        require(msg.sender == owner);
+        videoUrl = _videoUrl;
+        emit NewStream(msg.sender, _videoUrl);
+    }
+
+    function addViewer(address _viewer) public {
+        require(msg.sender == owner);
+        viewers[_viewer] = true;
+        emit ViewerAdded(_viewer);
+    }
+}

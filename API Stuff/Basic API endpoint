@@ -1,0 +1,17 @@
+const express = require('express');
+const app = express();
+
+app.get('/api/endpoint', (req, res) => {
+  // handle the request
+  const data = req.query;
+  // perform some action on the platform
+  // create a response
+  const response = {
+    status: 'success',
+    data: data
+  };
+  // send the response
+  res.json(response);
+});
+
+app.listen(3000, () => console.log('Server started'));

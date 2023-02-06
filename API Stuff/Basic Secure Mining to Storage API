@@ -1,0 +1,76 @@
+// Import the mining contract
+import "./Mining.sol";
+
+// Import the storage contracts
+import "./DataStorageBank.sol";
+import "./TokenStorageBank.sol";
+
+// API contract
+contract API {
+    Mining mining;
+    DataStorageBank dataStorage;
+    TokenStorageBank tokenStorage;
+
+    // White-list of authorized addresses
+    mapping(address => bool) authorized;
+
+    // Constructor to set the mining and storage contracts
+    constructor(address miningAddress, address dataStorageAddress, address tokenStorageAddress) public {
+        mining = Mining(miningAddress);
+        dataStorage = DataStorageBank(dataStorageAddress);
+        tokenStorage = TokenStorageBank(tokenStorageAddress);
+    }
+
+    // Function to authorize an address
+    function authorize(address _address) public {
+        require(msg.sender == address(this)); // Only the contract owner can authorize an address
+        authorized[_address] = true;
+    }
+
+    // Function to revoke authorization of an address
+    function revokeAuthorization(address _address) public {
+        require(msg.sender == address(this)); // Only the contract owner can revoke an address
+        authorized[_address] = false;
+    }
+
+    // API function to mine data
+    function mineData(bytes32 data) public {
+        require(authorized[msg.sender]); // Check if the caller is authorized
+        // Get the mined data
+        bytes32 minedData = mining.mineData(data);
+
+        // Store the mined data
+        dataStorage.storeData(keccak256(abi.encodePacked(block.timestamp, msg.sender)), minedData);
+    }
+
+    // API function to retrieve mined data
+    function getMinedData(address miner, uint256 timestamp) public view returns (bytes32) {
+        require(authorized[msg.sender]); // Check if the caller is authorized
+        // Generate the key for the mined data
+        bytes32 key = keccak256(abi.encodePacked(timestamp, miner));
+
+        // Retrieve the mined data
+        return dataStorage.retrieveData(key);
+    }
+
+    // API function to deposit tokens
+    function depositTokens(address to, uint256 value) public {
+        require(authorized[msg.sender]); // Check if the caller is authorized
+        // Deposit the tokens
+        tokenStorage.deposit(to, value);
+    }
+
+    // API function to withdraw tokens
+    function withdrawTokens(address from, uint256 value) public {
+        require(authorized[msg.sender]); // Check if the caller is authorized
+        // Withdraw the tokens
+        tokenStorage.withdraw(from, value);
+    }
+
+    // API function to transfer tokens
+    function transferTokens(address from, address to, uint256 value) public {
+        require(authorized[msg.sender]); // Check if the caller is authorized
+        // Transfer the tokens
+        tokenStorage.transfer(from, to, value);
+    }
+}

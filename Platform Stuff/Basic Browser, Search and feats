@@ -1,0 +1,49 @@
+import sys
+from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QWebEngineView, QToolBar, QAction
+
+app = QApplication(sys.argv)
+
+window = QMainWindow()
+window.resize(800, 600)
+
+web_view = QWebEngineView()
+web_view.load(QUrl("https://www.google.com"))
+
+address_bar = QLineEdit()
+address_bar.returnPressed.connect(lambda: web_view.load(QUrl(address_bar.text())))
+
+# Create a toolbar
+toolbar = QToolBar()
+
+# Create a back button
+back_button = QAction("Back")
+back_button.setShortcut(QKeySequence.Back)
+back_button.triggered.connect(web_view.back)
+toolbar.addAction(back_button)
+
+# Create a forward button
+forward_button = QAction("Forward")
+forward_button.setShortcut(QKeySequence.Forward)
+forward_button.triggered.connect(web_view.forward)
+toolbar.addAction(forward_button)
+
+# Create a refresh button
+refresh_button = QAction("Refresh")
+refresh_button.setShortcut(QKeySequence.Refresh)
+refresh_button.triggered.connect(web_view.reload)
+toolbar.addAction(refresh_button)
+
+# Create a stop button
+stop_button = QAction("Stop")
+stop_button.setShortcut(QKeySequence.Stop)
+stop_button.triggered.connect(web_view.stop)
+toolbar.addAction(stop_button)
+
+window.addToolBar(toolbar)
+window.setCentralWidget(web_view)
+window.setAddressBar(address_bar)
+window.show()
+
+sys.exit(app.exec_())

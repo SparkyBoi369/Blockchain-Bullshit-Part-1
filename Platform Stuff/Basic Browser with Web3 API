@@ -1,0 +1,19 @@
+from web3 import Web3
+
+# Connect to a local Ethereum node
+w3 = Web3(Web3.HTTPProvider("http://localhost:8545"))
+
+# Check if connected to Ethereum node
+if w3.isConnected():
+    print("Connected to Ethereum node")
+else:
+    print("Not connected to Ethereum node")
+
+# Get the balance of an Ethereum address
+address = "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+balance = w3.eth.getBalance(address)
+print(f"Balance of {address}: {balance} wei")
+
+# Convert wei to ether
+balance_ether = w3.fromWei(balance, 'ether')
+print(f"Balance of {address}: {balance_ether} ether")

@@ -1,0 +1,21 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const storage = require('./storage');
+const wallet = require('./wallet');
+
+const app = express();
+app.use(bodyParser.json());
+
+app.post('/connect-wallet', (req, res) => {
+    const { privateKey, publicKey } = req.body;
+    if (!privateKey || !publicKey) {
+        return res.status(400).send({ error: 'Invalid request' });
+    }
+    wallet.connect(privateKey, publicKey);
+    storage.connect(publicKey);
+    res.send({ message: 'Wallet connected to data and token storage' });
+});
+
+app.listen(3000, () => {
+    console.log('API listening on port 3000');
+});

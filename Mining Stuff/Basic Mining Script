@@ -1,0 +1,14 @@
+import hashlib
+
+def mine(difficulty):
+    prefix = '0' * difficulty
+    nonce = 0
+    while True:
+        data = str(nonce).encode()
+        hash_result = hashlib.sha256(data).hexdigest()
+        if hash_result[:difficulty] == prefix:
+            print(f"Block mined! Nonce: {nonce}, Hash: {hash_result}")
+            break
+        nonce += 1
+
+mine(3) # mining with difficulty of 3

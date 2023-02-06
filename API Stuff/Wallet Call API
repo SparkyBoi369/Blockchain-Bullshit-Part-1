@@ -1,0 +1,8 @@
+fetch('http://localhost:3000/connect-wallet', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ privateKey: 'your-private-key', publicKey: 'your-public-key' }),
+})
+.then((response) => response.json())
+.then((data) => console.log(data))
+.catch((error) => console.error(error));

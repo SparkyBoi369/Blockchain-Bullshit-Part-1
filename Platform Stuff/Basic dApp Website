@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+  <script>
+    // Connect to the Ethereum blockchain
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      // Set the provider you want from Web3.providers
+      web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    }
+
+    // Your smart contract ABI and address
+    var contractABI = [...];
+    var contractAddress = "0x...";
+
+    // Create the contract object
+    var contract = new web3.eth.Contract(contractABI, contractAddress);
+
+    // Interact with the contract
+    function viewData() {
+      contract.methods.viewData().call().then(function(result) {
+        document.getElementById("data").innerHTML = result;
+      });
+    }
+
+    function addData() {
+      var data = document.getElementById("input").value;
+      contract.methods.addData(data).send({from: web3.eth.defaultAccount}).then(function() {
+        viewData();
+      });
+    }
+
+  </script>
+</head>
+<body>
+  <div id="data"></div>
+  <input id="input" type="text"></input>
+  <button onclick="viewData()">View Data</button>
+  <button onclick="addData()">Add Data</button>
+</body>
+</html>

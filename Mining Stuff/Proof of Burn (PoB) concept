@@ -1,0 +1,14 @@
+def proof_of_burn(coins_burned):
+    """
+    A function to demonstrate proof of burn.
+
+    :param coins_burned: The number of coins to be burned
+    :return: A message indicating the successful burn of coins
+    """
+    if coins_burned <= 0:
+        return "Invalid burn amount"
+    else:
+        # logic to update the network's record of the user's coin balance, 
+        # subtracting the number of coins burned
+        ...
+        return f"{coins_burned} coins burned successfully"

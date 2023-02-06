@@ -1,0 +1,19 @@
+# Define a list of documents
+documents = [
+    "Best pizza place in New York City",
+    "Pizza delivery near me",
+    "Italian restaurant in Los Angeles",
+    "New York style pizza recipe"
+]
+
+# Define a query
+query = "pizza place in New York City"
+
+# Perform the Hummingbird algorithm
+relevant_documents = []
+for document in documents:
+    if "pizza" in document and "New York City" in document:
+        relevant_documents.append(document)
+
+# Print the relevant documents
+print(relevant_documents)

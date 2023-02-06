@@ -1,0 +1,10 @@
+import ipfsapi
+
+# Initialize the IPFS API
+api = ipfsapi.Client()
+
+# Add a file to the IPFS network
+response = api.add("path/to/file.txt")
+
+# Print the file's hash
+print(response['Hash'])

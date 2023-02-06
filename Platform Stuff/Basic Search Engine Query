@@ -1,0 +1,11 @@
+documents = ["document 1 content", "document 2 content", "document 3 content"]
+
+def search(query):
+    results = []
+    for document in documents:
+        if query in document:
+            results.append(document)
+    return results
+
+query = "content"
+print(search(query))

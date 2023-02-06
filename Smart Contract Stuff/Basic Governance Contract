@@ -1,0 +1,32 @@
+pragma solidity ^0.8.0;
+
+contract Governance {
+    address public owner;
+    mapping(address => bool) public voters;
+    mapping(address => uint) public votes;
+
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    function vote(bool support) public {
+        require(voters[msg.sender] == false);
+        voters[msg.sender] = true;
+        if (support) {
+            votes[msg.sender] = 1;
+        } else {
+            votes[msg.sender] = 0;
+        }
+    }
+
+    function execute() public {
+        require(msg.sender == owner);
+        uint voteCount = 0;
+        for (address voter in voters) {
+            voteCount += votes[voter];
+        }
+        if (voteCount > (address(this).balance / 2)) {
+            // execute proposal
+        }
+    }
+}

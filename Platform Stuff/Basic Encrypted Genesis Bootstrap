@@ -1,0 +1,69 @@
+// Genesis block
+blockchain GenesisBlock {
+    // Block properties
+    uint256 timestamp;
+    uint256 nonce;
+    address miner;
+    bytes32 hash;
+
+    // Encryption protocol
+    function encrypt(string memory _plaintext) public view returns (bytes32) {
+        bytes memory plaintextBytes = bytes(_plaintext);
+        return sha256(plaintextBytes);
+    }
+
+    // Constructor function
+    constructor() public {
+        timestamp = now;
+        miner = msg.sender;
+    }
+
+    // Proof of Work function
+    function mine() public {
+        nonce = uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty, nonce)));
+        hash = keccak256(abi.encodePacked(block.timestamp, block.difficulty, nonce, miner));
+    }
+}
+
+// Smart contract
+contract SmartContract {
+    // State variable to track the contract's balance
+    uint256 public balance;
+
+    // Event to track changes to the contract's balance
+    event BalanceChanged(uint256 _newBalance);
+
+    // Function to add funds to the contract
+    function addFunds() public payable {
+        require(msg.value > 0);
+        balance += msg.value;
+        emit BalanceChanged(balance);
+    }
+
+    // Function to withdraw funds from the contract
+    function withdrawFunds() public {
+        require(msg.sender == owner);
+        require(balance > 0);
+        msg.sender.transfer(balance);
+        emit BalanceChanged(0);
+    }
+}
+
+// Bootstrap node
+contract BootstrapNode {
+    address public owner;
+
+    // Constructor function
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    // Function to add new nodes
+    function addNode(address _node) public {
+        require(msg.sender == owner);
+        emit NodeAdded(_node);
+    }
+
+    // Event to track new nodes
+    event NodeAdded(address indexed _node);
+}

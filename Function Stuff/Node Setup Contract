@@ -1,0 +1,10 @@
+pragma solidity ^0.8.0;
+
+contract NodeSetup {
+    mapping(address => bool) public nodes;
+
+    function setupNode() public {
+        require(!nodes[msg.sender]);
+        nodes[msg.sender] = true;
+    }
+}

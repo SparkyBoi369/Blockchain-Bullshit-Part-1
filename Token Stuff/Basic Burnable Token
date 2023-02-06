@@ -1,0 +1,30 @@
+pragma solidity ^0.8.0;
+
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+
+contract BurnableToken is ERC20 {
+    mapping (address => uint256) public burnProofs;
+
+    function burn(uint256 _value, bytes32 proof) public {
+        // Verify the proof of burn
+        require(keccak256(abi.encodePacked(burnProofs[msg.sender], _value)) == proof, "Invalid proof of burn");
+
+        // Decrease the token balance
+        _burn(msg.sender, _value);
+    }
+
+    function _burn(address _burner, uint256 _value) internal {
+        require(_burner != address(0), "Burner address cannot be zero");
+        require(balanceOf[_burner] >= _value, "Not enough balance");
+        require(_value > 0, "Burn value must be greater than zero");
+
+        // Update the token balance
+        balanceOf[_burner] -= _value;
+        totalSupply -= _value;
+
+        // Emit the burn event
+        emit Burn(_burner, _value);
+    }
+
+    event Burn(address indexed burner, uint256 value);
+}

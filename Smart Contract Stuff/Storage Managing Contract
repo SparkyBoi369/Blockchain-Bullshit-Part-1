@@ -1,0 +1,26 @@
+pragma solidity ^0.8.0;
+
+contract StorageManager {
+    mapping(address => uint256) public storageSpace;
+    mapping(address => bool) public isActive;
+
+    event LogStoragePurchase(address buyer, uint256 space);
+
+    function purchaseStorage(uint256 space) public payable {
+        require(msg.value >= space * 1 ether, "Price is not sufficient");
+        require(isActive[msg.sender] == false, "User already has storage space");
+        storageSpace[msg.sender] = space;
+        isActive[msg.sender] = true;
+        emit LogStoragePurchase(msg.sender, space);
+    }
+
+    function checkStorage() public view returns (uint256) {
+        return storageSpace[msg.sender];
+    }
+
+    function releaseStorage() public {
+        require(isActive[msg.sender] == true, "User doesn't have storage space");
+        delete storageSpace[msg.sender];
+        isActive[msg.sender] = false;
+    }
+}

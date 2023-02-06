@@ -1,0 +1,22 @@
+function mineData(data) {
+    // call the mining code and pass in the data
+    var minedData = miningCode.mine(data);
+    // return the mined data
+    return minedData;
+}
+
+
+function getData(dataID) {
+    // call the data storage code and pass in the dataID
+    var data = dataStorage.get(dataID);
+    // return the data
+    return data;
+}
+
+
+function callAPI(action, data) {
+    // call the API and pass in the action and data
+    var result = api.call(action, data);
+    // return the result
+    return result;
+}

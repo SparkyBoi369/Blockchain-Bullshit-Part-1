@@ -1,0 +1,16 @@
+# A basic function to track user contributions to mining
+def track_contributions(user_address, mining_hash):
+    contributions = {}
+    if user_address in contributions:
+        contributions[user_address] += 1
+    else:
+        contributions[user_address] = 1
+    return contributions
+
+# Usage
+user_address = "0x1234567890abcdef"
+mining_hash = "a1b2c3d4e5f6g7h8i9j0"
+
+contributions = track_contributions(user_address, mining_hash)
+print(contributions)
+# Output: {'0x1234567890abcdef': 1}

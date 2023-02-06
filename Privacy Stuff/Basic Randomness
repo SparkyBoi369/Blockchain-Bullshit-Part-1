@@ -1,0 +1,3 @@
+function randomness() public {
+    // Introduce randomness to the network
+}

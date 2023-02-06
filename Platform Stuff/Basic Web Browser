@@ -1,0 +1,21 @@
+import sys
+from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QWebEngineView
+
+app = QApplication(sys.argv)
+
+window = QMainWindow()
+window.resize(800, 600)
+
+web_view = QWebEngineView()
+web_view.load(QUrl("https://www.google.com"))
+
+address_bar = QLineEdit()
+address_bar.returnPressed.connect(lambda: web_view.load(QUrl(address_bar.text())))
+
+window.setCentralWidget(web_view)
+window.setAddressBar(address_bar)
+window.show()
+
+sys.exit(app.exec_())

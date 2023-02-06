@@ -1,0 +1,16 @@
+// Wallet shortcut function
+function accessWallet() {
+    // Code to connect to the wallet API and retrieve the user's wallet information
+}
+
+// Data and token storage shortcut function
+function accessStorage() {
+    // Code to connect to the data and token storage API and retrieve the user's storage information
+}
+
+// Mining progress shortcut function
+function accessMiningProgress() {
+    // Code to connect to the mining API and retrieve the progress of the user's current mining operation
+}
+
+// Add these functions to the website's user interface to provide easy access for the user

@@ -1,0 +1,39 @@
+// Genesis block
+blockchain GenesisBlock {
+    // Block properties
+    uint256 timestamp;
+    uint256 nonce;
+    address miner;
+    bytes32 hash;
+
+    // Constructor function
+    constructor() public {
+        timestamp = now;
+        miner = msg.sender;
+    }
+
+    // Proof of Work function
+    function mine() public {
+        nonce = uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty, nonce)));
+        hash = keccak256(abi.encodePacked(block.timestamp, block.difficulty, nonce, miner));
+    }
+}
+
+// Bootstrap node
+contract BootstrapNode {
+    address public owner;
+
+    // Constructor function
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    // Function to add new nodes
+    function addNode(address _node) public {
+        require(msg.sender == owner);
+        emit NodeAdded(_node);
+    }
+
+    // Event to track new nodes
+    event NodeAdded(address indexed _node);
+}

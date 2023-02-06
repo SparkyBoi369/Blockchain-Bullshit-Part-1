@@ -1,0 +1,55 @@
+pragma solidity ^0.8.0;
+
+contract Token {
+    // Event to track token transfers
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    // Mapping to store the balance of each address
+    mapping(address => uint256) public balanceOf;
+
+    // Total supply of tokens
+    uint256 public totalSupply;
+
+    // Initialize the contract with a total supply of tokens
+    constructor(uint256 initialSupply) public {
+        totalSupply = initialSupply;
+        balanceOf[msg.sender] = totalSupply;
+    }
+
+    // Function to transfer tokens from one address to another
+    function transfer(address to, uint256 value) public {
+        require(balanceOf[msg.sender] >= value && value > 0);
+        balanceOf[msg.sender] -= value;
+        balanceOf[to] += value;
+        emit Transfer(msg.sender, to, value);
+    }
+
+    // Function to transfer tokens privately
+    function transferPrivacy(address to, uint256 value, bytes32 hash) public {
+        require(balanceOf[msg.sender] >= value && value > 0);
+        balanceOf[msg.sender] -= value;
+        balanceOf[to] += value;
+        emit Transfer(sha3(hash), to, value);
+    }
+
+    // Function to view the private transfer history of an address
+    function viewPrivateHistory(address account) public view returns (uint256[], bytes32[]) {
+        uint256[] privateTransfers;
+        bytes32[] privateHashes;
+        uint256 index = 0;
+        for (uint256 i = 0; i < totalSupply; i++) {
+            if (bytes32(keccak256(abi.encodePacked(Transfer))) == sha3(privateHashes[i])) {
+                privateTransfers[index] = Transfer.value;
+                privateHashes[index] = privateHashes[i];
+                index++;
+            }
+        }
+        return (privateTransfers, privateHashes);
+    }
+
+    // Anonymity protocol
+    function anonymize(address to, uint256 value) public {
+        uint256 anonymizedValue = value + uint256(sha3(abi.encodePacked(now, msg.sender, to)));
+        transfer(to, anonymizedValue);
+    }
+}

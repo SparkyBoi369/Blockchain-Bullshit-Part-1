@@ -1,0 +1,26 @@
+import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+documents = ["document 1 content", "document 2 content", "document 3 content"]
+
+# preprocess the documents
+tfidf = TfidfVectorizer()
+document_matrix = tfidf.fit_transform(documents)
+
+def search(query):
+    # preprocess the query
+    query_matrix = tfidf.transform([query])
+    
+    # calculate the similarity between the query and the documents
+    similarities = cosine_similarity(query_matrix, document_matrix)
+    
+    # sort the documents by their similarity to the query
+    sorted_indices = np.argsort(similarities.flatten())[::-1]
+    results = [documents[i] for i in sorted_indices]
+    
+    return results
+
+query = "content"
+print(search(query))

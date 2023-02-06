@@ -1,0 +1,25 @@
+pragma solidity ^0.8.0;
+
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+
+contract NFTTokenPairing {
+    ERC721 public nft;
+    ERC20 public token;
+
+    constructor(address _nftAddress, address _tokenAddress) public {
+        nft = ERC721(_nftAddress);
+        token = ERC20(_tokenAddress);
+    }
+
+    function pairNFTWithToken(uint256 NFTId, uint256 tokenId) public {
+        // Check if NFT with NFTId exists
+        require(nft.exists(NFTId), "NFT does not exist");
+
+        // Check if token with tokenId exists
+        require(token.balanceOf(address(this)) >= tokenId, "Token does not exist or not enough balance");
+
+        // Transfer token to NFT owner
+        token.transferFrom(address(this), nft.ownerOf(NFTId), tokenId);
+    }
+}

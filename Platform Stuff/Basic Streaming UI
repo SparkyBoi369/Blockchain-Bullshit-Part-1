@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>Livestreaming dApp</title>
+</head>
+<body>
+    <div id="stream-container"></div>
+    <button id="start-stream-btn">Start Stream</button>
+    <input type="text" id="video-url-input" placeholder="Enter video URL">
+    <script>
+        // Connect to the Ethereum blockchain
+        const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+        const contractAddress = "0x..."; // Add the contract address here
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+        // Handle the "Start Stream" button click
+        document.getElementById("start-stream-btn").addEventListener("click", function() {
+            const videoUrl = document.getElementById("video-url-input").value;
+            contract.methods.startStream(videoUrl).send({ from: web3.eth.defaultAccount }).then(function(receipt) {
+                console.log("Stream started: ", receipt);
+                // Add the video player to the page
+                const videoPlayer = document.createElement("video");
+                videoPlayer.src = videoUrl;
+                videoPlayer.autoplay = true;
+                videoPlayer.controls = true;
+                document.getElementById("stream-container").appendChild(videoPlayer);
+            }).catch(function(error) {
+                console.error("Error starting stream: ", error);
+            });
+        });
+    </script>
+</body>
+</html>

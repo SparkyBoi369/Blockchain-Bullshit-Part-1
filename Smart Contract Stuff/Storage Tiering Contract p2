@@ -1,0 +1,29 @@
+pragma solidity ^0.8.0;
+
+contract TokenConverter {
+    mapping(address => uint256) public lowerTierTokens;
+    mapping(address => uint256) public higherTierTokens;
+
+    event LogConversion(address user, uint256 lowerTierTokens, uint256 higherTierTokens);
+
+    function convertTokens() public {
+        require(lowerTierTokens[msg.sender] >= 100, "Not enough lower tier tokens");
+        uint256 lowerTier = lowerTierTokens[msg.sender];
+        if (lowerTier == 100){
+            lowerTierTokens[msg.sender] = 100;
+            higherTierTokens[msg.sender] += (lowerTier-100)/100;
+        }else{
+            lowerTierTokens[msg.sender] = 0;
+            higherTierTokens[msg.sender] += lowerTier/100;
+        }
+        emit LogConversion(msg.sender, lowerTier, higherTierTokens[msg.sender]);
+    }
+
+    function checkHigherTier() public view returns (uint256) {
+        return higherTierTokens[msg.sender];
+    }
+
+    function depositLowerTier(uint256 amount) public {
+        lowerTierTokens[msg.sender] += amount;
+    }
+}

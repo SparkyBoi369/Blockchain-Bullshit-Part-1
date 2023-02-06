@@ -1,0 +1,16 @@
+def update_balance_and_check_burn_status(user, burnAmount, currentBalance, totalBurned):
+    """
+    A function to update a user's balance and check the burn status of tokens.
+
+    :param user: The user to update the balance for
+    :param burnAmount: The amount of tokens to be burned
+    :param currentBalance: The current balance of the user
+    :param totalBurned: The total amount of tokens burned in the network
+    :return: A message indicating the status of the burn and the updated balance
+    """
+    if burnAmount > currentBalance:
+        return f"Invalid burn amount for user {user}"
+    else:
+        updatedBalance = currentBalance - burnAmount
+        totalBurned += burnAmount
+        return f"User {user} burned {burnAmount} tokens, new balance is {updatedBalance}, total tokens burned in the network {totalBurned}"

@@ -1,0 +1,18 @@
+pragma solidity ^0.8.0;
+
+contract SearchEngine {
+    mapping(address => string) public sources; // a list of trusted sources
+    mapping(string => string) public results; // search results
+
+    function addSource(string memory _source) public {
+        // only the owner of the contract can add sources
+        require(msg.sender == address(this));
+        sources[msg.sender] = _source;
+    }
+
+    function search(string memory _query) public view returns(string memory) {
+        // check if the source of the query is trusted
+        require(sources[msg.sender] != "");
+        return results[_query];
+    }
+}

@@ -217,5 +217,294 @@ Basic AES Encryption for Data
 Basic encryption for data before being put onto the blockchain, very 
 simple and would require more complexity.
 -
+Basic RSA algorithm
 
+A basic RSA algorithm.
+-
+Basic Elliptic Curve Encryption
 
+A basic Elliptic Curve Encryption.
+-
+Basic ERC20 Token with RSA
+
+A basic token with RSA encryption. A template to build upon for future 
+crypto projects.
+-
+Sharded Data implementation
+
+Basic protocol for implementing the maintenance of the sharding of 
+data for a given user.
+-
+Basic ERC Token With Sharding
+
+A basic ERC20 Token with a sharding protocol.
+-
+Compressed NFT contract
+
+A smart contract that would allow for the storage of multiple NFTs on
+a given token.
+-
+Token Bridge contract
+
+A smart contract that would be utilized to interact with a networks API
+so that the given token can interact with multiple networks such as
+Filecoin, IPFS, STORJ and Sia 
+-
+Basic ERC20 Token with Token Bridge
+
+A basic ERC20 token with a token bridge contract that can interact with
+storage on and off network chains.
+-
+Basic API endpoint
+
+A basic API code.
+-
+Basic Search Engine Query
+
+A basic code for a search engine to get results for specific documents.
+-
+Search Engine AI contract
+
+A smart contract for a search engine and an AI to pull results from, and
+discerning bnetween trusted sources and other misc sources.
+-
+Basic Search Engine w multiple
+
+A basic code for a search engine to use machine learning to rank and 
+list different sources.
+-
+Basic Web Browser
+
+a simple browser window with a QWebEngineView that is used to display 
+web pages and a QLineEdit that serves as the address bar.
+-
+Basic Browser, Search and feats
+
+A simple code for a basic browser with a search engine that can go
+forward, backward, reload and refresh.
+-
+Basic Browser with Wallet
+
+A simple code for a basic browser with a built in wallet.
+-
+Basic Browser with Web3 API
+
+A basic browser with an API to a specific blockchain, or Web3 address
+or network.
+-
+Basic Networtk Scanning
+
+A simple code for network scanning of a hacking program.
+-
+Basic Vulnerability Assessment
+
+A simple code for vulnerability assessment of a hacking program.
+-
+Basic Exploitation 
+
+A simple code for basic exploitation of a hacking program.
+-
+Basic Post Exploitation
+
+A simple code for post exploitation of a hacking program.
+-
+Basic Data Interaction
+
+A simple code for an AI to interact and analyze a set of data
+-
+IPFS Interaction Sending and Receiving Files 
+
+Basic coding for sending asnd receiving files from the IPFS
+network.
+-
+Basic Hash Table
+
+A simple code for a basic hash table 
+-
+Storage Managing Contract 
+
+A simple code for a smart contract for storing data 
+-
+Storage Tiering Contract 
+
+A simple code for a smart contract that would allow the user to
+convert data into smaller tiers on a base quantity of 100, or other 
+specified value
+-
+Storage Tiering Contract p2
+
+An extension of the storage tiering contract to allow for stacking 
+varying amounts of data broken up into stacks of 100
+-
+Basic Sitemaps protocol 
+
+A very basic coding example of what a Sitemaps protocol might look like
+-
+Basic Hummingbird Algorithm 
+
+A very basic coding example of a hummingbird algorithm 
+-
+Basic Anonymization, compliance, privacy enhancement, randomness, regular
+audits and Privacy Token Contract 
+
+Simple coding for privacy features, with some of the features being
+represented in a smart contract for a given token
+-
+Basic Mining Script 
+
+A basic code for a mining script meant for future implementation of
+mining operations 
+-
+Basic script for PoW 
+
+A simple code for a mining script utilizing PoW 
+-
+Basic script for PoS 
+
+A simple code for a basic mining script for PoS 
+-
+Basic Delegated Proof of Stake v2
+
+Another coding example of a DPoS consensus mechanism
+-
+Basic Genesis and Bootstrap
+
+A basic code for the creation of a genesis block and a Bootstrap
+node
+-
+Basic Encrypted Genesis Bootstrap 
+
+The above code with an added encryption for data passing through the 
+node 
+-
+Data and Token Storage
+
+A simple code for storing data and tokens in a given space
+-
+Basic Mining to Storage API 
+
+A basic code connecting mining output into the data and token 
+storage 
+-
+Basic Secure Mining to Storage API 
+
+Taking the basic code from above and adding a security protocol 
+-
+Basic dApp website
+
+A simple code for a decentralized application website 
+-
+Basic dApp website w mining 
+
+A simpole code that connects the dApp website to the mining aspect
+of a given platform
+-
+Mining Parameter 
+
+A set of basic functions that would allow the website to call for
+mining, utilizing website API and accessing data storage 
+-
+Security Breach
+
+Function that will alert users to breaches into whatever aspect of 
+the network 
+-
+Basic Wallet to Storage API 
+
+A basic API that will connect a users wallet to token and data storage 
+-
+Wallet Call API 
+
+A basic API to call for the wallet in the client view of the dApp 
+-
+Shortcuts for Wallet, Store, Mine 
+
+A set of functions that will give a shortcut for users to uitlize to 
+access the wallet, storage and mining 
+-
+Tracking User Contribution
+
+A function that would be used to track the contribution of users towards 
+the mining efforts and potential activities of the network 
+-
+Node Setup Contract 
+
+A contract with a built in function for setting up a node 
+-
+Updating Consensus Nodes
+
+A function that will update the consensus mechanism for the nodes 
+of the network 
+-
+Basic Governance Contract 
+
+A basic contract for the application's governance mechanism 
+-
+Basic Streamer Contract 
+
+A basic contract for a streamer to utilize for streaming services 
+on a given dApp 
+-
+Basic Streaming UI 
+
+A basiuc code for a UI that will interact with the basic streamer 
+contract 
+-
+Basic Back End Server 
+
+A simple coding for the back end of a streaming server
+-
+Basic Back End UI 
+
+A simple code for a basic back end connection for the UI 
+-
+Basic Peer 2 Peer Streaming API
+
+A basic API for peer to peer streaming on a livestreaming dApp 
+-
+Proof of Burn (PoB) Concept
+
+A conceptual coding illustrating the Proof of Burn mechanism 
+-
+PoB and PoST Hybrid
+
+A conceptual hybrid consensus mechanism to illustrate Proof of 
+Burn and Proof of Space-Time working in tandem
+-
+Verification and Storage Function 
+
+A function to verify whether a user has allocated storage space
+for the Proof of Space-Time consensus mechanism
+-
+PoB n PoST p2 
+
+An updated contract with the addition of the verification 
+function for the PoB and PoST hybrid consensus mechanism 
+-
+Update Status n Burn Function 
+
+A function that will update a users balance and burn status 
+-
+Amount of Tokens Stored Prot 
+
+A protocol that will keep track of the amount of tokens stored
+on a users account 
+-
+PoB n PoST p3
+
+The updated contract with the addition of the tokens stored protocol 
+-
+Basic Token-NFT Pairing 
+
+A basic, pseudocode example of a token being paired with an NFT 
+-
+Basic Burnable Token 
+
+A basic pseudocode that illustrates a burnable token that can be 
+utilized in a Proof of Burn consensus mechanism 
+-
+Basic Virtual Mining Rig 
+
+A simple code to use as a template for a virtual mining rig for a 
+Proof of Burn and a Proof of Space-Time consensus 
+-

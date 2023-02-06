@@ -1,0 +1,15 @@
+# Define the list of URLs that should be included in the sitemap
+urls = ["https://example.com/about", "https://example.com/services", "https://example.com/contact"]
+
+# Define the information about each URL
+url_info = {
+    "https://example.com/about": {"last_modified": "2022-01-01", "change_frequency": "monthly", "priority": 0.8},
+    "https://example.com/services": {"last_modified": "2022-02-01", "change_frequency": "weekly", "priority": 0.5},
+    "https://example.com/contact": {"last_modified": "2022-03-01", "change_frequency": "daily", "priority": 1.0},
+}
+
+# Create the sitemap
+sitemap = {"urls": urls, "url_info": url_info}
+
+# Print the sitemap
+print(sitemap)
