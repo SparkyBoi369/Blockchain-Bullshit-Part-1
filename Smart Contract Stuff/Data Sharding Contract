@@ -1,0 +1,35 @@
+pragma solidity ^0.8.0;
+
+contract MyDataSharding {
+
+    struct DataShard {
+        bytes32 hash;
+        uint shardNumber;
+    }
+
+    mapping(address => DataShard[]) public dataShards;
+    address public dataOwner;
+
+    constructor() public {
+        dataOwner = msg.sender;
+    }
+
+    function setData(bytes32[] memory _dataHashes) public {
+        require(msg.sender == dataOwner);
+        require(_dataHashes.length > 0);
+
+        for (uint i = 0; i < _dataHashes.length; i++) {
+            dataShards[msg.sender].push(DataShard(_dataHashes[i], i));
+        }
+    }
+
+    function transferOwnership(address newOwner) public {
+        require(msg.sender == dataOwner);
+        dataOwner = newOwner;
+    }
+
+    function retrieveData(address _dataOwner, uint _shardNumber) public view returns (bytes32) {
+        require(_shardNumber < dataShards[_dataOwner].length);
+        return dataShards[_dataOwner][_shardNumber].hash;
+    }
+}

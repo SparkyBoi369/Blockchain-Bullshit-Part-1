@@ -1,0 +1,22 @@
+pragma solidity ^0.8.0;
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/cryptography/ECIES.sol";
+
+contract MyECIESEncryptedData {
+    ECIES ecies;
+    bytes32 encryptedData;
+    bytes32 publicKey;
+    bytes32 privateKey;
+    
+    constructor() public {
+        ecies = new ECIES();
+        (publicKey, privateKey) = ecies.generateKeyPair();
+    }
+    
+    function setData(bytes memory data) public {
+        encryptedData = ecies.encrypt(publicKey, data);
+    }
+    
+    function getData(bytes32 privateKey) public view returns (bytes memory) {
+        return ecies.decrypt(privateKey, encryptedData);
+    }
+}

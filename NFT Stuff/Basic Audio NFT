@@ -1,0 +1,19 @@
+pragma solidity ^0.8.0;
+
+contract MyAudioNFT is MyNFT {
+    mapping(bytes32 => string) public tokenIdToAudio;
+
+    function mint(bytes32 _tokenId, string memory _audio) public {
+        require(msg.sender == owner);
+        require(!tokenIdExists[_tokenId]);
+        tokenIdToOwner[_tokenId] = msg.sender;
+        tokenIdExists[_tokenId] = true;
+        tokenIdToAudio[_tokenId] = _audio;
+        emit Transfer(_tokenId, address(0), msg.sender);
+    }
+
+    function retrieveAudio(bytes32 _tokenId) public view returns (string memory) {
+        require(tokenIdExists[_tokenId]);
+        return tokenIdToAudio[_tokenId];
+    }
+}

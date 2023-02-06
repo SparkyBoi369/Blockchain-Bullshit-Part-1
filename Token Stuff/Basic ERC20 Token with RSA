@@ -1,0 +1,44 @@
+pragma solidity ^0.8.0;
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/cryptography/RSA.sol";
+
+contract MyEncryptedToken is SafeERC20 {
+    RSA rsa;
+    string public name;
+    string public symbol;
+    uint8 public decimals;
+    uint256 public totalSupply;
+    mapping(address => uint256) public balanceOf;
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    bytes32 publicKey;
+    bytes32 privateKey;
+    bytes32 encryptedData;
+    
+    constructor() public {
+        name = "My Encrypted Token";
+        symbol = "MYET";
+        decimals = 18;
+        totalSupply = 1000000000000000000;
+        balanceOf[msg.sender] = totalSupply;
+        rsa = new RSA();
+        (publicKey, privateKey) = rsa.generateKeyPair();
+    }
+
+    function transfer(address _to, uint256 _value) public {
+        require(balanceOf[msg.sender] >= _value);
+        require(balanceOf[_to] + _value >= balanceOf[_to]);
+
+        balanceOf[msg.sender] -= _value;
+        balanceOf[_to] += _value;
+        emit Transfer(msg.sender, _to, _value);
+    }
+
+    function setData(bytes memory data) public {
+        require(msg.sender == address(this));
+        encryptedData = rsa.encrypt(publicKey, data);
+    }
+    
+    function getData(bytes32 privateKey) public view returns (bytes memory) {
+        return rsa.decrypt(privateKey, encryptedData);
+    }
+}

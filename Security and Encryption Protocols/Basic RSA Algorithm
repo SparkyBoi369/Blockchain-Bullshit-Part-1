@@ -1,0 +1,22 @@
+pragma solidity ^0.8.0;
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/cryptography/RSA.sol";
+
+contract MyRSAEncryptedData {
+    RSA rsa;
+    bytes32 encryptedData;
+    bytes32 publicKey;
+    bytes32 privateKey;
+    
+    constructor() public {
+        rsa = new RSA();
+        (publicKey, privateKey) = rsa.generateKeyPair();
+    }
+    
+    function setData(bytes memory data) public {
+        encryptedData = rsa.encrypt(publicKey, data);
+    }
+    
+    function getData(bytes32 privateKey) public view returns (bytes memory) {
+        return rsa.decrypt(privateKey, encryptedData);
+    }
+}

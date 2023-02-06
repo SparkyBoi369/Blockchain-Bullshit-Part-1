@@ -1,0 +1,221 @@
+Simple Crypto Trade Plat
+
+This code uses the ccxt library to interact with the Binance and Bittrex 
+exchanges. It initializes an object for each exchange, then uses 
+the fetch_ticker() method to retrieve ticker information for 
+the BTC/USDT trading pair. It compares the bid prices from each 
+exchange and prints a message indicating which exchange has the 
+higher bid price.
+-
+This code is just a simple example of how you can connect to 
+different centralized exchanges and retrieve information. 
+The actual implementation would be much more complex and would 
+involve connecting to different protocols to connect decentralized
+ exchanges, implementing security measures and also implementing 
+ a way to link multiple blockchains into a single network.
+-
+ Basic ERC20 Token
+
+This code defines a smart contract called "MyToken" that implements
+ the basic functionality of a standard ERC20 token. It hasd the properties
+ for the tokens name, symbol, and dumber of decimals, as well as total
+ supply. The contract also includes a mapping for the balance of each address
+ and a transfer function that allows for transferring tokens from one address
+ to another.
+-
+Simple Zerocoin implementation
+
+This code defines a smart contract called "MyZerocoinToken" that 
+inherits from the "zerocoin" contract and implements the basic functionality
+of the zerocoin protocol. It includes a mint function that allows users to
+mint new zerocoins. The contract also includes a mapping for the balance
+of each address and a "transfer" event
+-
+zk-SNARKs implementation
+
+This code defines a smart contract called "MyZkSnarktoken" that 
+implements the basic functionality of a token and uses zk-SNARKs to 
+provide priovacy for the trnsactions. The 'verify' function in the 
+verifier contract, which is inherited from the imported library, is
+used to validate the transaction without revealing any information.
+
+Note, this is a very basic example.
+-
+Basic Staking contract
+
+This code defines a smart contract called 
+"MyStaking" that allows token holders to stake 
+and unstake tokens in exchange for rewards. The 
+conract maintains a mapping of the stake of each address,
+a mapping of the rewards earned, and the total supply of
+the tokens. The 'stake' function allows a user to lock up
+tokens in exchange for rewards and the 'unstake' function allows
+the user to release their locked up tokens. The 'claim rewards'
+function allows the user to claim the rewards earned for staking.
+The 'calculaterewards' function is used to calculate the rewards
+for the user, the logic for this function can be defined according
+to the specific requirements of the project.
+
+Regarding moving data around on a token, one way to do this is by
+using the 'transfer' function. For example, in the staking contract,
+the 'stake' function uses the 'transfer' function bto move around
+the tokens from the users address to the contract's address and the
+'unstake' function uses the 'transfer' function to move the tokens
+back to the user's address.
+
+Just a basic example.
+-
+Reference data token
+
+This code defines a smart contract called "MyDataToken" that
+stores a reference to a 10 GB of data in the form of an IPFS hash and
+an address of the data owner. The 'setdata' function allows the 
+data owner to set the IPFS hash of the data and the 'transferownership'
+function allows the data owner to transfer the ownership of the token
+and the data to another address.
+
+As for sending the token through the blockchain, this can be done 
+by calling the 'transfer' function that is specific to the token.
+
+Again, a basic example.
+-
+Off Chain IPFS Data contract 
+
+This smart contract, called "MyDataStorage" stores a reference
+to the data in the form of an IPFS hash and an address of the 
+data owner. The 'setdata' function allows the data owner to set 
+the IPFS hash of the data, the 'transferownership' function allows
+the data owner to transfer the ownership of the token and the data
+to another address, and the 'retreivedata' function allows anyone to
+retreive the data from IPFS using the IPFS hash stored in the 
+smart contract.
+
+Basic example
+-
+Data Sharding contract
+
+This smart contract, called "MyDataSharding" implements data shardiong
+by storing an array of data shards, which are structs that contain the 
+hash of the data and the shard number. The 'setdata' function allows
+the data owner to set the data shards by passing an array of hashes,
+the 'transferownership' function allows the data owner to transfer
+the ownership of the token and the data to another address, and the 
+'retreivedata' function allows anyone to retreive a specific shard
+of the data by providing the data owner's address and the shard number.
+
+This is just another basic example.
+-
+Basic Security protocol
+
+This code defines a smart contract called "MySecurityProtocol" that
+implements a basic security protocol. The contract includes a mapping
+of authorized addresses, an owner address, and an instance of ECDSA library.
+The 'authorize' function allows the owner to authorize a specific user
+to access the data, the 'revoke' function allows the owner to revoke
+the authorization of a specific user, the 'encrypt' function allows an
+authorized user to encrypt the data and the 'decrypt' function allows an
+authorized user to decrypt the data.
+-
+Basic AES Encryption 
+
+A basic AES Encryption
+-
+Basic Secure Encrypt Token
+
+This code defines a smart contract called "MyToken" that
+implements a basic token. The contract includes a mapping of
+token balances, an owner address, a name, symbol, and decimals,
+a mapping of authorized addresses, an address of data owner and 
+a reference to the data in the form of an IPFS hash, and a key 
+for encryption. The 'authorize' function allows the owner to 
+authorize a specific user to access the token, the 'revoke' 
+function allows the owner to revoke authorization, the 'mint' 
+function allows the owner to set the datahash and the key for 
+encryption, and the 'retreivedata' function allows anyone to 
+retreive the data hash.
+
+This is a basic example, and not ready for market deployment.
+-
+Basic Hot Wallet
+
+This code defines a nsmart contract called "MyHotWallet" that implements 
+a basic hot wallet. The contract includes a mapping of wallet balances,
+an owner address. The 'deposit' function allows anyone to deposit funds
+into the wallet, the 'withdraw' function allows the owner to withdraw
+funds from the wallet, the 'checkbalance' function allows anyone to check
+the balance of the wallet.
+
+Basic example, not market ready.
+-
+Basic Secure Hot Wallet
+
+Same as the Basic Hot wallet, but with added encryption.
+
+Again, not market ready.
+-
+Secure Cold Wallet
+
+A cold wallet with basic security and encryption.
+-
+Basic NFT
+
+This code definers a smart contract called "MyNFT" that implements a
+basic NFT. The contract includes a mapping of token ids to their owners,
+a mapping of token ids to whether or not they exist, and an owner address.
+The 'mint' function allows the owner to mint a new NFT, the 'transfer'
+function allows the owner of the NFT to transfer it to another address,
+and the 'burn' function allows the owner of an NFT to burn it.
+-
+Basic Audio NFT
+
+This code defines a smart contract called "MyAudioNFT" that extends from the
+"MyNFT" contract and implements an audio NFT. The conract includes a mapping
+of token ids to their audio files. The 'mint' function is overriden to 
+accept an additional parameter for the audio file, and a new function 
+'retreiveaudio' which allows anyone to retreive the audio file of a 
+specific token id.
+-
+Basic Media NFT
+
+This code defines "MyMediaNFT" contract that has two functions 
+'mintaudioNFT' and 'mintMP4NFT' which allow the owner to mint new NFTs for
+audio and MP4 files respectively. Each NFT is identified by a unique tokenid
+and stored in the mapping 'tokenidtoNFT'. The 'transfer' function allows the
+owner of a 'tokenid' to transfer it to another address. The 'mint' function
+and the 'transfer' function emit events that can be captured by external
+contracts or users.
+-
+Basic NFT to Complex NFT
+
+Building upon the Basic NFT above.
+-
+Basic Proof of Work (PoW)
+
+A simple example of Proof of Work utilized with mining Bitcoin and
+Ethereum
+-
+Basic Proof of Stake (PoS)
+
+A simple example of a Proof of Stake utilized with Ethereum and other
+cryptocurrencies
+-
+Cuckoo Cycle PoW 
+
+Basic example of PoW utilized by Grin
+-
+Basic ProgPoW
+
+A basic example of a proposed process for Ethereum.
+-
+Basic Delegated Proof of Stake (DPoS)
+
+A basic algorithm used by EOS and Steem, though proper implementation
+would require more complexity.
+-
+Basic AES Encryption for Data
+
+Basic encryption for data before being put onto the blockchain, very 
+simple and would require more complexity.
+-
+
+

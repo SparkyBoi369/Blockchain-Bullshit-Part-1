@@ -1,0 +1,33 @@
+pragma solidity ^0.8.0;
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/cryptography/ECDSA.sol";
+
+contract MySecurityProtocol {
+    address public owner;
+    mapping(address => bool) public authorized;
+    ECDSA public ecdsa;
+
+    constructor() public {
+        owner = msg.sender;
+        ecdsa = new ECDSA();
+    }
+
+    function authorize(address _user) public {
+        require(msg.sender == owner);
+        authorized[_user] = true;
+    }
+
+    function revoke(address _user) public {
+        require(msg.sender == owner);
+        authorized[_user] = false;
+    }
+
+    function encrypt(bytes memory _data, address _user) public {
+        require(authorized[_user]);
+        return ecdsa.sign(_data, _user);
+    }
+
+    function decrypt(bytes memory _data, address _user) public {
+        require(authorized[_user]);
+        return ecdsa.recover(_data);
+    }
+}

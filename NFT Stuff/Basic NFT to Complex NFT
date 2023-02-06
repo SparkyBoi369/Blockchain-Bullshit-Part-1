@@ -1,0 +1,44 @@
+pragma solidity ^0.8.0;
+
+contract MyBasicNFT {
+    mapping(bytes32 => address) public tokenIdToOwner;
+    mapping(bytes32 => bool) public tokenIdExists;
+    address public owner;
+
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    function mint(bytes32 _tokenId) public {
+        require(msg.sender == owner);
+        require(!tokenIdExists[_tokenId]);
+        tokenIdToOwner[_tokenId] = msg.sender;
+        tokenIdExists[_tokenId] = true;
+        emit Transfer(_tokenId, address(0), msg.sender);
+    }
+
+    function transfer(bytes32 _tokenId, address _to) public {
+        require(tokenIdExists[_tokenId]);
+        require(tokenIdToOwner[_tokenId] == msg.sender);
+        tokenIdToOwner[_tokenId] = _to;
+        emit Transfer(_tokenId, msg.sender, _to);
+    }
+
+    function burn(bytes32 _tokenId) public {
+        require(tokenIdExists[_tokenId]);
+        require(tokenIdToOwner[_tokenId] == msg.sender);
+        tokenIdExists[_tokenId] = false;
+        emit Transfer(_tokenId, msg.sender, address(0));
+    }
+
+    event Transfer(bytes32 indexed _tokenId, address indexed _from, address indexed _to);
+}
+
+contract MyComplexNFT is MyBasicNFT {
+    mapping(bytes32 => string) public tokenIdToAudio;
+    mapping(bytes32 => string) public tokenIdToVideo;
+
+    function mint(bytes32 _tokenId, string memory _audio, string memory _video) public {
+        require(msg.sender == owner);
+        require(!tokenIdExists[_tokenId]);
+        tokenIdToOwner[_tokenId] = msg.sender

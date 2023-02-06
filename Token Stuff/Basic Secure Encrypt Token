@@ -1,0 +1,53 @@
+pragma solidity ^0.8.0;
+
+contract MyToken {
+    mapping(address => uint) public balances;
+    address public owner;
+    string public name;
+    string public symbol;
+    uint8 public decimals;
+    mapping(address => bool) public authorized;
+    address public dataOwner;
+    string public dataHash;
+    bytes32 public key;
+
+    constructor(string memory _name, string memory _symbol, uint8 _decimals) public {
+        owner = msg.sender;
+        name = _name;
+        symbol = _symbol;
+        decimals = _decimals;
+    }
+
+    function authorize(address _user) public {
+        require(msg.sender == owner);
+        authorized[_user] = true;
+    }
+
+    function revoke(address _user) public {
+        require(msg.sender == owner);
+        authorized[_user] = false;
+    }
+
+    function mint(address _to, uint _value) public {
+        require(msg.sender == owner);
+        require(_value > 0);
+        balances[_to] += _value;
+    }
+
+    function transfer(address _to, uint _value) public {
+        require(authorized[msg.sender]);
+        require(_value > 0 && balances[msg.sender] >= _value);
+        balances[msg.sender] -= _value;
+        balances[_to] += _value;
+    }
+
+    function setData(string memory _dataHash, bytes32 _key) public {
+        require(msg.sender == owner);
+        dataHash = _dataHash;
+        key = _key;
+    }
+
+    function retrieveData() public view returns (string memory) {
+        return dataHash;
+    }
+}

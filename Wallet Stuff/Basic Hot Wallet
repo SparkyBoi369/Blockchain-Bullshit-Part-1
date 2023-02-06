@@ -1,0 +1,28 @@
+pragma solidity ^0.8.0;
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/wallet/SafeMath.sol";
+
+contract MyHotWallet {
+    using SafeMath for uint256;
+    mapping(address => uint256) public balances;
+    address public owner;
+
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    function deposit() public payable {
+        require(msg.value > 0);
+        balances[msg.sender] = balances[msg.sender].add(msg.value);
+    }
+
+    function withdraw(uint256 _value) public {
+        require(_value > 0 && _value <= balances[msg.sender]);
+        require(msg.sender == owner);
+        msg.sender.transfer(_value);
+        balances[msg.sender] = balances[msg.sender].sub(_value);
+    }
+
+    function checkBalance() public view returns (uint256) {
+        return balances[msg.sender];
+    }
+}

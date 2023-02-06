@@ -1,0 +1,22 @@
+#define _mm256_set_epi64x(a, b, c, d) _mm256_set_epi64x(d, c, b, a)
+#define _mm256_set1_epi64x(a) _mm256_set_epi64x(a, a, a, a)
+#define _mm256_setzero_si256() _mm256_set1_epi64x(0)
+
+typedef unsigned long long u64;
+typedef unsigned int u32;
+typedef unsigned char u8;
+
+inline u32 ROTL32(u32 x, u8 r) { return (x << r) | (x >> (32 - r)); }
+
+__m256i mm256_swap_epi32(__m256i x) {
+    return _mm256_shuffle_epi32(x, 0b01010101);
+}
+
+__m256i mm256_swap_epi64(__m256i x) {
+    return _mm256_permute4x64_epi64(x, 0b0101);
+}
+
+__m256i mm256_swap_epi16(__m256i x) {
+    return _mm256_shuffle_epi8(x,
+                               _mm256_set_epi8(15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+                                              

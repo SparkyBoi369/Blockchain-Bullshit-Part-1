@@ -1,0 +1,29 @@
+pragma solidity ^0.8.0;
+import "https://github.com/ipfs/js-ipfs-api/dist/index.js";
+
+contract MyDataStorage {
+
+    string public dataHash;
+    address public dataOwner;
+
+    constructor() public {
+        dataOwner = msg.sender;
+    }
+
+    function setData(string memory _dataHash) public {
+        require(msg.sender == dataOwner);
+        dataHash = _dataHash;
+    }
+
+    function transferOwnership(address newOwner) public {
+        require(msg.sender == dataOwner);
+        dataOwner = newOwner;
+    }
+
+    function retrieveData() public view returns (string memory) {
+        // IPFS code to retrieve the data using the dataHash
+        var ipfs = new IpfsApi();
+        var fileBuffer = await ipfs.files.cat(dataHash);
+        return fileBuffer;
+    }
+}

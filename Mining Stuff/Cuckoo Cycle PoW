@@ -1,0 +1,15 @@
+bool cuckoo_verify(const node *nodes, u32 nonce, u32 edge_bits, u32 proof[PROOFSIZE], u32 pow_size)
+{
+    u32 u = HASH_SIZE / sizeof(u32), v = sizeof(node) / sizeof(u32);
+    u32 x = 2 * (1 << edge_bits), y = (1 << edge_bits);
+    u32 s = x + y, mask = (1 << edge_bits) - 1;
+    u32 i, j, k, l, u_i, u_j, u_k, u_l, v_i, v_j, v_k, v_l, a, b, c, d, e, f, g, h;
+    u32 idx1[PROOFSIZE], idx2[PROOFSIZE], idx3[PROOFSIZE], idx4[PROOFSIZE];
+    u32 *n = (u32 *)nodes;
+    u32 *p = (u32 *)proof;
+    u32 *sip_keys = (u32 *)sip_keys;
+    u32 sip_hash[4];
+    u32 edge_mask = (1 << edge_bits) - 1;
+    u32 pow_size_mask = pow_size - 1;
+
+    for (i = 0; i < PROO

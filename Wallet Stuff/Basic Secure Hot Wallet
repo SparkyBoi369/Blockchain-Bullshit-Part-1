@@ -1,0 +1,53 @@
+pragma solidity ^0.8.0;
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/cryptography/ECDSA.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/wallet/SafeMath.sol";
+
+contract MySecureHotWallet {
+    using SafeMath for uint256;
+    mapping(address => uint256) public balances;
+    address public owner;
+    mapping(address => bool) public authorized;
+    bytes32 public key;
+    ECDSA public ecdsa;
+
+    constructor() public {
+        owner = msg.sender;
+        ecdsa = new ECDSA();
+    }
+
+    function authorize(address _user) public {
+        require(msg.sender == owner);
+        authorized[_user] = true;
+    }
+
+    function revoke(address _user) public {
+        require(msg.sender == owner);
+        authorized[_user] = false;
+    }
+
+    function setKey(bytes32 _key) public {
+        require(msg.sender == owner);
+        key = _key;
+    }
+
+    function deposit() public payable {
+        require(msg.value > 0);
+        require(authorized[msg.sender]);
+        balances[msg.sender] = balances[msg.sender].add(msg.value);
+    }
+
+    function withdraw(uint256 _value) public {
+        require(_value > 0 && _value <= balances[msg.sender]);
+        require(authorized[msg.sender]);
+        bytes memory _data = abi.encodePacked(msg.sender, _value);
+        bytes32 _signature = ecdsa.sign(_data, key);
+        msg.sender.transfer(_value);
+        emit Withdrawal(_value, _signature);
+    }
+
+    function checkBalance() public view returns (uint256) {
+        return balances[msg.sender];
+    }
+
+    event Withdrawal(uint256 _value, bytes32 _signature);
+}

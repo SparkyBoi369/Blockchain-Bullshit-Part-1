@@ -1,0 +1,18 @@
+pragma solidity ^0.8.0;
+
+contract NFTStorage {
+    mapping(bytes32 => bytes32) nftHashes;
+    mapping(bytes32 => bool) nftExists;
+    address owner;
+    event LogNewNFT(bytes32 nftId);
+    event LogDeleteNFT(bytes32 nftId);
+    event LogEditNFT(bytes32 nftId);
+
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    function addNFT(bytes32 nftId, bytes memory data) public {
+        require(msg.sender == owner);
+        require(!nftExists[nftId]);
+        bytes32 hash = keccak256(abi.encodePacked(data

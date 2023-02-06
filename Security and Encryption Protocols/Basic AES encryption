@@ -1,0 +1,11 @@
+pragma solidity ^0.8.0;
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/cryptography/AES.sol";
+
+contract MyEncryptionProtocol {
+    AES public aes;
+    constructor() public {
+        aes = new AES();
+    }
+
+    function encrypt(bytes memory _data, bytes32 _key) public pure returns (bytes memory) {
+        return aes.encrypt(_data

@@ -1,0 +1,45 @@
+pragma solidity ^0.8.0;
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/cryptography/PBKDF2.sol";
+
+contract MyColdWallet {
+    address public owner;
+    bytes32 public salt;
+    bytes32 public encryptedSeed;
+    bytes32 public encryptedKey;
+    mapping(address => bool) public authorized;
+    PBKDF2 public pbkdf2;
+
+    constructor() public {
+        owner = msg.sender;
+        pbkdf2 = new PBKDF2();
+    }
+
+    function authorize(address _user) public {
+        require(msg.sender == owner);
+        authorized[_user] = true;
+    }
+
+    function revoke(address _user) public {
+        require(msg.sender == owner);
+        authorized[_user] = false;
+    }
+
+    function setSeed(bytes32 _seed, bytes32 _password) public {
+        require(msg.sender == owner);
+        salt = pbkdf2.generateSalt();
+        encryptedSeed = pbkdf2.encrypt(_seed, _password, salt);
+    }
+
+    function setKey(bytes32 _key, bytes32 _password) public {
+        require(msg.sender == owner);
+        encryptedKey = pbkdf2.encrypt(_key, _password, salt);
+    }
+
+    function getSeed(bytes32 _password) public view returns (bytes32) {
+        require(authorized[msg.sender]);
+        return pbkdf2.decrypt(encryptedSeed, _password, salt);
+    }
+
+    function getKey(bytes32 _password) public view returns (bytes32) {
+        require(authorized[msg.sender]);
+        return pbkdf2.decrypt

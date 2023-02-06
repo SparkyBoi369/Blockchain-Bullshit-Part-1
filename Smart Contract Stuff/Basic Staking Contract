@@ -1,0 +1,39 @@
+pragma solidity ^0.8.0;
+
+contract MyStaking {
+    mapping(address => uint256) public stake;
+    mapping(address => uint256) public reward;
+    uint256 public totalSupply;
+
+    event Stake(address indexed staker, uint256 value);
+    event Unstake(address indexed staker, uint256 value);
+    event Claim(address indexed staker, uint256 value);
+
+    function stake(uint256 value) public {
+        require(value > 0);
+        require(msg.sender.transfer(value));
+        stake[msg.sender] += value;
+        totalSupply += value;
+        emit Stake(msg.sender, value);
+    }
+
+    function unstake(uint256 value) public {
+        require(value > 0);
+        require(stake[msg.sender] >= value);
+        stake[msg.sender] -= value;
+        totalSupply -= value;
+        msg.sender.transfer(value);
+        emit Unstake(msg.sender, value);
+    }
+
+    function claimRewards() public {
+        uint256 rewards = calculateRewards();
+        require(rewards > 0);
+        reward[msg.sender] += rewards;
+        emit Claim(msg.sender, rewards);
+    }
+
+    function calculateRewards() private view returns (uint256) {
+        // Logic for calculating rewards
+    }
+}

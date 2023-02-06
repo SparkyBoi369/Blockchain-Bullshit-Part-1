@@ -1,0 +1,55 @@
+pragma solidity ^0.8.0;
+
+contract DataSharding {
+    mapping(bytes32 => bytes32) shards;
+    bytes32[] shardHashes;
+    bytes32[] shardIds;
+    mapping(bytes32 => bool) public shardExists;
+    uint public shardCount;
+    
+    event LogNewShard(bytes32 shardId);
+    event LogDeleteShard(bytes32 shardId);
+    event LogEditShard(bytes32 shardId);
+    
+    function addShard(bytes32 shardId, bytes memory data) public {
+        require(!shardExists[shardId]);
+        shards[shardId] = keccak256(abi.encodePacked(data));
+        shardHashes.push(shards[shardId]);
+        shardIds.push(shardId);
+        shardExists[shardId] = true;
+        shardCount++;
+        emit LogNewShard(shardId);
+    }
+    
+    function deleteShard(bytes32 shardId) public {
+        require(shardExists[shardId]);
+        delete shards[shardId];
+        for (uint i = 0; i < shardHashes.length; i++) {
+            if (shardHashes[i] == shards[shardId]) {
+                shardHashes[i] = shardHashes[shardHashes.length-1];
+                shardIds[i] = shardIds[shardIds.length-1];
+                shardHashes.length--;
+                shardIds.length--;
+                break;
+            }
+        }
+        shardExists[shardId] = false;
+        shardCount--;
+        emit LogDeleteShard(shardId);
+    }
+    
+    function editShard(bytes32 shardId, bytes memory data) public {
+        require(shardExists[shardId]);
+        shards[shardId] = keccak256(abi.encodePacked(data));
+        emit LogEditShard(shardId);
+    }
+    
+    function checkIntegrity() public view returns (bool) {
+        for (uint i = 0; i < shardHashes.length; i++) {
+            if (shards[shardIds[i]] != shardHashes[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}

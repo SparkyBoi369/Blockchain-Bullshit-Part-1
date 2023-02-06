@@ -1,0 +1,15 @@
+import ccxt
+
+# Initialize exchange objects
+binance = ccxt.binance()
+bittrex = ccxt.bittrex()
+
+# Fetch ticker information
+binance_ticker = binance.fetch_ticker('BTC/USDT')
+bittrex_ticker = bittrex.fetch_ticker('BTC/USDT')
+
+# Compare ticker prices
+if binance_ticker['bid'] > bittrex_ticker['bid']:
+    print("Binance has a higher bid price for BTC/USDT")
+else:
+    print("Bittrex has a higher bid price for BTC/USDT")

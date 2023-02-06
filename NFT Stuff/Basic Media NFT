@@ -1,0 +1,37 @@
+pragma solidity ^0.8.0;
+
+contract MyMediaNFT {
+    mapping(bytes32 => address) public tokenIdToNFT;
+    mapping(bytes32 => bool) public tokenIdExists;
+    address public owner;
+
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    function mintAudioNFT(bytes32 _tokenId, address _audioNFT) public {
+        require(msg.sender == owner);
+        require(!tokenIdExists[_tokenId]);
+        tokenIdToNFT[_tokenId] = _audioNFT;
+        tokenIdExists[_tokenId] = true;
+        emit Transfer(_tokenId, address(0), msg.sender);
+    }
+
+    function mintMP4NFT(bytes32 _tokenId, address _mp4NFT) public {
+        require(msg.sender == owner);
+        require(!tokenIdExists[_tokenId]);
+        tokenIdToNFT[_tokenId] = _mp4NFT;
+        tokenIdExists[_tokenId] = true;
+        emit Transfer(_tokenId, address(0), msg.sender);
+    }
+
+    function transfer(bytes32 _tokenId, address _to) public {
+        require(tokenIdExists[_tokenId]);
+        address _nft = tokenIdToNFT[_tokenId];
+        MyNFT(_nft).transfer(_tokenId, _to);
+        emit Transfer(_tokenId, msg.sender, _to);
+    }
+
+    event Transfer(bytes32 indexed _tokenId, address indexed _from, address indexed _to);
+}
+

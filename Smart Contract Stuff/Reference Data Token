@@ -1,0 +1,20 @@
+pragma solidity ^0.8.0;
+
+contract MyDataToken {
+    string public dataHash;
+    address public dataOwner;
+
+    constructor() public {
+        dataOwner = msg.sender;
+    }
+
+    function setData(string memory _dataHash) public {
+        require(msg.sender == dataOwner);
+        dataHash = _dataHash;
+    }
+
+    function transferOwnership(address newOwner) public {
+        require(msg.sender == dataOwner);
+        dataOwner = newOwner;
+    }
+}

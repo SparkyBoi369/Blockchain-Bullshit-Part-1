@@ -1,0 +1,31 @@
+pragma solidity ^0.8.0;
+import "https://github.com/ZcashFoundation/zcash-circuit/contracts/snarks/Verifier.sol";
+
+contract MyZkSnarkToken {
+    string public name;
+    string public symbol;
+    uint8 public decimals;
+    uint256 public totalSupply;
+
+    mapping(address => uint256) public balanceOf;
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    Verifier verifier;
+
+    constructor(uint256 initialSupply, string memory tokenName, string memory tokenSymbol) public {
+        totalSupply = initialSupply;
+        name = tokenName;
+        symbol = tokenSymbol;
+        decimals = 18;
+        balanceOf[msg.sender] = totalSupply;
+        verifier = new Verifier();
+    }
+
+    function transfer(address to, uint256 value) public {
+        require(verifier.verify(msg.sender, to, value));
+        require(balanceOf[msg.sender] >= value);
+        balanceOf[msg.sender] -= value;
+        balanceOf[to] += value;
+        emit Transfer(msg.sender, to, value);
+    }
+}

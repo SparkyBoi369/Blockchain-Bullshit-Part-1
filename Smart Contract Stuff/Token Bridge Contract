@@ -1,0 +1,27 @@
+pragma solidity ^0.8.0;
+
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
+
+contract TokenBridge {
+    address public storageNetwork;
+    mapping(address => uint256) public tokenBalances;
+    SafeERC20 public token;
+    
+    event LogPayment(address indexed user, uint256 value);
+    event LogStorage(address indexed user, bytes32 fileId);
+    event LogRetrieval(address indexed user, bytes32 fileId);
+    
+    constructor(address _token, address _storageNetwork) public {
+        token = SafeERC20(_token);
+        storageNetwork = _storageNetwork;
+    }
+
+    function deposit(uint256 value) public {
+        require(token.transferFrom(msg.sender, address(this), value));
+        tokenBalances[msg.sender] += value;
+    }
+    
+    function payForStorage(bytes32 fileId, uint256 value) public {
+        require(tokenBalances[msg.sender] >= value);
+        tokenBalances[msg.sender] -= value;
+        storageNetwork.call(abi.encodeWithSignature("pay(address,uint256,bytes32)", msg
